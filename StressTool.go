@@ -25,19 +25,20 @@ type pts struct {
 	y float64
 }
 
+// Function to stop the attack
 func stop() {
 	consoleReader := bufio.NewReaderSize(os.Stdin, 1)
 	input, _ := consoleReader.ReadByte()
 
 	ascii := input
 
-	// ESC = 27 and Ctrl-C = 3
 	if ascii == 27 || ascii == 3 {
 		flag = 1
 		return
 	}
 }
 
+//Making http requests
 func Requests(url string) {
 	for i := 0; i < 10; i++ {
 		resp, err := http.Get(url)
@@ -54,6 +55,7 @@ func Requests(url string) {
 
 }
 
+//handler function to amke concurrent requests and plot the graph output
 func handler(wg *sync.WaitGroup, url string, rout int) {
 
 	//var pts []plotter.XYs
@@ -83,7 +85,6 @@ func handler(wg *sync.WaitGroup, url string, rout int) {
 			for i, xy := range newpts {
 				ppts[i].X = xy.x
 				ppts[i].Y = xy.y
-				//fmt.Println(ppts)
 			}
 			err = plotutil.AddLinePoints(p, "Http requests per second", ppts)
 			if err != nil {
@@ -100,11 +101,10 @@ func handler(wg *sync.WaitGroup, url string, rout int) {
 		fmt.Println(time.Now().Format("2006-01-02 15:04:05"), count)
 		newpts = append(newpts, pts{secs, count})
 		secs += 1.0
-		//fmt.Println(newpts)
 		count = 0.0
 
 	}
-	//fmt.Println(len(newpts))
+
 }
 
 func main() {
@@ -133,7 +133,7 @@ func main() {
 	go handler(&wg, inputUrl, nRoutines)
 
 	wg.Wait()
-	//time.Sleep(15000 * time.Millisecond)
+
 	fmt.Println("Total response size", length/1024, "MB")
 	fmt.Println("Done")
 
