@@ -1,6 +1,6 @@
 # Web-Stress-Tool
 
-A website should fulfill availability requirement of users. This program try to make as many as possible simple hhtp request and gives per second analysis. This is achieved thrrough concurrency provided by Golang. The result is displayed in the form of graph which is plotted using the library Gonum Plot. 
+This web stress tool tests websites performance by making as many as possible simple http request and gives per second analysis.  This is achieved through concurrency provided by Golang. The result is displayed in the form of graph which is plotted using the library Gonum Plot. 
 
 ### Requirements 
 
